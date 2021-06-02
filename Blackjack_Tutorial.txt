@@ -1,0 +1,22 @@
+TUTORIAL:
+Point system:
+All Kings, Queens, Jacks = 10 points
+Ace = 1 or 11 points
+Number cards are valued at their respective numbers.
+
+First, place a bet ($500 max)
+Once you place a bet, you and the dealer will draw 2 cards with one of the dealer's cards face down.
+
+During the game, you will have the option to "hit" or "stand". (You can type h or s as well)
+"Hitting" will draw another card from the deck. 
+"Standing" will end your turn and let the dealer finish their turn.
+
+The goal is to get more points than your opponent without going over 21 points. 
+If you go over 21 points, you will automatically lose. 
+However, aces are allowed to switch their values at any point in the game. 
+Therefore, if you have any aces in your hand, your points will be recalculated.
+
+If you get exactly 21 points, you will automatically win if the dealer does not
+have a blackjack in their first two cards, and receive a payout of 3:2.
+Regular wins will pay 1:1, and ties will not gain nor lose you any money.
+
