@@ -1,10 +1,13 @@
-# Blackjack
-A simple text-based Blackjack
+# Blackjack - Table of Contents
+- [Getting Started](#getting-started)
+- [Running the Program](#running-the-program)
+- [How to play](#how-to-play)
+- [Screenshots](#screenshots)
 
-To play this online check this [link](https://replit.com/talk/share/Blackjack/139070) out.
 
 # Getting Started
 
+ To play this online, click [here](https://replit.com/talk/share/Blackjack/139070).
 ### NOTE: If the colors work for you out of the box, you can ignore the instructions below.
 
 On Pycharm, colors work by default. On Mintty (Git Bash's default) colors will display properly by default as well.
