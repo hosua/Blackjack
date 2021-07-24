@@ -10,7 +10,7 @@
  To play this online, click [here](https://replit.com/talk/share/Blackjack/139070).
 ### NOTE: If the colors work for you out of the box, you can ignore the instructions below.
 
-On Pycharm, colors work by default. On Mintty (Git Bash's default) colors will display properly by default as well.
+On Pycharm, colors work by default. On VSCode, colors will display properly by default as well.
 
 There are many other methods to get color working, these are just a few examples. 
 
