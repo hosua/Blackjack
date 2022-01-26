@@ -1,7 +1,19 @@
-import Cards
 from colorama import Fore
 from colorama import Back
 from colorama import Style
+
+COLOR_MODE = True
+
+COL_RED = ""
+COL_WHITE = ""
+COL_BLACK = ""
+COL_RESET = ""
+if COLOR_MODE:
+    COL_RED = Fore.RED
+    COL_WHITE = Fore.LIGHTWHITE_EX
+    COL_BLACK = Fore.LIGHTBLACK_EX
+    COL_RESET = Fore.RESET
+
 # 10's were manually drawn because of its length.
 ascii_dict = {"S": [[" _____ ",
                      "|R .  |",
@@ -52,18 +64,18 @@ ascii_dict = {"S": [[" _____ ",
                      "|  .  |",
                      "|___10|"]],
         "Facedown": [" _____ ",
-                    r"|\\~//|",
+                     r"|\\~//|",
                      "|}}:{{|",
                      "|}}:{{|",
                      "|}}:{{|",
-                    r"|//~\\|"]}
+                     r"|//~\\|"]}
 class CardToASCII:
     def __init__(self):
         pass
 
     @staticmethod
     def draw_ASCII(hand, num_facedown=0):
-        rtn_str = Back.LIGHTBLACK_EX + ""
+        rtn_str = ""
         for i in range(len(ascii_dict["S"][0])):
             for card in hand:
                 rank = card.get()["rank"]
@@ -71,18 +83,18 @@ class CardToASCII:
                 color = card.get()["color"]
                 if color == "red":
                     if rank == "10":
-                        rtn_str += Fore.RED + ascii_dict[suit][1][i] + Fore.RESET
+                        rtn_str += COL_RED + ascii_dict[suit][1][i] + COL_RESET
                     else:
-                        rtn_str += Fore.RED + ascii_dict[suit][0][i].replace("R", rank)
+                        rtn_str += COL_RED + ascii_dict[suit][0][i].replace("R", rank)
                 elif color == "black":
                     if rank == "10":
-                        rtn_str += Fore.BLACK + ascii_dict[suit][1][i] + Fore.RESET
+                        rtn_str += COL_BLACK + ascii_dict[suit][1][i] + COL_RESET
                     else:
-                        rtn_str += Fore.BLACK + ascii_dict[suit][0][i].replace("R", rank) + Fore.WHITE
+                        rtn_str += COL_BLACK + ascii_dict[suit][0][i].replace("R", rank) + COL_WHITE
             for j in range(num_facedown):
-                rtn_str += Fore.RESET + ascii_dict["Facedown"][i]
+                rtn_str += COL_RESET + ascii_dict["Facedown"][i]
             rtn_str += "\n"
-        rtn_str += Back.RESET + Fore.RESET
+        rtn_str += COL_RESET
         return rtn_str
 """ # Test cards
 CH = Cards.CardHandler()

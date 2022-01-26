@@ -14,17 +14,37 @@ win_sound = os.path.join(sound_path, "tada.mp3")
 lose_sound = os.path.join(sound_path, "fail.mp3")
 neutral_sound = os.path.join(sound_path, "neutral.mp3")
 no_money_sound = os.path.join(sound_path, "the-price-is-right-losing-horn.mp3")
+
+COLOR_MODE = True
+
+# Colors
+COL_WHITE = ""
+COL_WIN = ""
+COL_LOSE = ""
+COL_PLAYER = ""
+COL_AI = ""
+COL_BLACKJACK = ""
+COL_STATS = ""
+COL_BLACK = ""
+COL_RESET = ""
+if COLOR_MODE: 
+    COL_WHITE = Fore.LIGHTWHITE_EX
+    COL_WIN = Fore.GREEN
+    COL_LOSE = Fore.RED
+    COL_PLAYER = Fore.BLUE
+    COL_AI = Fore.RED
+    COL_BLACKJACK = Fore.YELLOW
+    COL_STATS = Fore.MAGENTA
+    COL_BLACK = Fore.LIGHTBLACK_EX
+    COL_RESET = Fore.RESET
+
 CH = Cards.CardHandler()
 deck = CH.make_deck()
 card_dict = CH.card_dict
 blackjack_dict = {"2": [2], "3": [3], "4": [4], "5": [5], "6": [6], "7": [7], "8": [8], "9": [9], "10": [10], "J": [10],
                   "Q": [10], "K": [10], "A": [1, 11]}
-"""
-FIX: 
-*** A A Q draw order Busts even though it should recalculate *** Recently fixed. Further testing needs to be done
-***Double down is completely broken, taken out. Need to think about how to do this first.
-blackjack should check if dealer has blackjack as well ** Fixed but untested so far
-"""
+
+
 class Blackjack:
     def __init__(self):
         self.deck = []  # Implement more decks later
@@ -35,7 +55,7 @@ class Blackjack:
         new_deck = []
         for i in range(num_decks):
             new_deck += CH.make_deck()
-        print(Fore.LIGHTWHITE_EX + "Created deck of size " + str(num_decks) + ".")
+        print(COL_WHITE + "Created deck of size " + str(num_decks) + ".")
         CH.shuffle_cards(new_deck)
         return new_deck
 
@@ -43,13 +63,13 @@ class Blackjack:
     def win_message(win):
         if win == "win":
             playsound(win_sound, block=False)
-            return Fore.GREEN + "You win!" + "\n" + Fore.RESET
+            return COL_WIN + "You win!" + "\n" + COL_RESET
         elif win == "lose":
             playsound(lose_sound, block=False)
-            return Fore.RED + "You lose!" + "\n" + Fore.RESET
+            return COL_LOSE + "You lose!" + "\n" + COL_RESET
         elif win == "tie":
             playsound(neutral_sound, block=False)
-            return Fore.LIGHTWHITE_EX + "Tie!" + "\n"
+            return COL_WHITE + "Tie!" + "\n"
 
     @staticmethod
     def move_ace_to_end(hand):  # need this for points calculations
@@ -127,12 +147,12 @@ class Blackjack:
         if pts > 21:
             pts = BJ.check_hand_again(hand)
         if player == "player":
-            print(Fore.BLUE + "Your hand:")
+            print(COL_PLAYER + "Your hand:")
             print("Your points:", pts)
             print(AC.draw_ASCII(hand))
 
         else:
-            print(Fore.RED + "Dealer hand:")
+            print(COL_AI + "Dealer hand:")
             print("Dealer points:", pts)
             print(AC.draw_ASCII(hand))
 
@@ -150,7 +170,7 @@ class Blackjack:
 
     def get_player_move(self, p1_hand, p1_points):
         try:
-            user_move = input(Fore.LIGHTWHITE_EX + "Enter hit or stand.\n"
+            user_move = input(COL_WHITE + "Enter hit or stand.\n"
                                                    "You can also type h or s instead.\n").lower()
             if user_move == "hit":
                 p1_hand + CH.draw_card(deck, 1)
@@ -172,13 +192,13 @@ class Blackjack:
         rtn += "\n"
         for key, value in money_dict.items():
             rtn += key + ": " + "${:,.2f}".format(value) + "|"
-        return print(Fore.MAGENTA + rtn.upper() + Fore.RESET)
+        return print(COL_STATS + rtn.upper() + COL_RESET)
 
     @staticmethod
     def get_bet(money):     # returns bet, money left
-        print(Fore.LIGHTWHITE_EX + "You have " + Fore.GREEN + "${:,.2f}".format(money) + Fore.RESET + ".")
+        print(COL_WHITE + "You have " + COL_WIN + "${:,.2f}".format(money) + COL_RESET + ".")
         try:
-            bet = float(input(Fore.LIGHTWHITE_EX +
+            bet = float(input(COL_WHITE +
                               "How much would you like to bet? You may only bet up to $500 per game.\n"))
             if bet <= 0:
                 print("You must bet more than $0!!")
@@ -192,7 +212,7 @@ class Blackjack:
         except ValueError:
             return 0
         money -= bet  # if we reach here then all checks were passed
-        print("You now have " + Fore.GREEN + "${:,.2f}".format(money) + Fore.RESET + ".")
+        print("You now have " + COL_WIN + "${:,.2f}".format(money) + COL_RESET + ".")
         return bet, money
 
     @staticmethod
@@ -203,7 +223,7 @@ class Blackjack:
             payout = bet + bet * (3/2)
         elif payout_type == "no winner":
             payout = bet
-        print(Fore.GREEN + "You won " + "${:,.2f}".format(payout) + "!" + Fore.RESET)
+        print(COL_WIN + "You won " + "${:,.2f}".format(payout) + "!" + COL_RESET)
         return payout
 
     @staticmethod
@@ -225,22 +245,23 @@ class Blackjack:
             return "tie"
 
     def title_screen(self):
-        user_in = int(input(Fore.LIGHTWHITE_EX + "1) Play Game\n" \
+        global COLOR_MODE
+        user_in = int(input(COL_WHITE + "1) Play Game\n" \
                             "2) How to play\n"
                             "3) Delete save\n"
                             "4) Quit\n"))
         if user_in == 1:
             return
-        elif user_in == 2:
+        if user_in == 2:
             with open("Blackjack_Tutorial.txt", "r") as f:
                 line_lst = f.readlines()
-            rtn = Fore.MAGENTA + ""
+            rtn = COL_STATS + ""
             for line in line_lst:
                 rtn += line
-            print(rtn + "\n" + Fore.RESET)
+            print(rtn + "\n" + COL_RESET)
             f.close()
             self.title_screen()
-        elif user_in == 3:
+        if user_in == 3:
             try:
                 options = input("Are you sure? Doing this will start a new game and wipe your save. (y/n)\n").lower()
                 if options == "y":
@@ -253,7 +274,7 @@ class Blackjack:
             except ValueError:
                 print("Invalid input.")
                 self.title_screen()
-        elif user_in == 4:
+        if user_in == 4:
             print("Quitting the game...")
             quit()
 
@@ -264,10 +285,10 @@ class Blackjack:
         p1_hand = CH.draw_card(deck, 2)
         dealer_hand = CH.draw_card(deck, 2)
         p1_points = BJ.check_hand(p1_hand)
-        print(Fore.BLUE + "Your hand:")
-        print(Fore.BLUE + "Your points:", p1_points)
+        print(COL_PLAYER + "Your hand:")
+        print(COL_PLAYER + "Your points:", p1_points)
         print(AC.draw_ASCII(p1_hand))
-        print(Fore.RED + "Dealer hand:")  # show one of the dealer's cards
+        print(COL_AI + "Dealer hand:")  # show one of the dealer's cards
         print(AC.draw_ASCII(dealer_hand[:1], num_facedown=1))
         BJ.move_ace_to_end(p1_hand)  # with a card face down
         isBlackjack = False
@@ -285,7 +306,7 @@ class Blackjack:
                     if p1_points == 21:
                         payout = BJ.get_payout(bet_amount, "blackjack")
                         isBlackjack = True
-                        print(Fore.YELLOW + "Blackjack!" + Back.RESET)
+                        print(COL_BLACKJACK + "Blackjack!")
                         player_turn = False
                 if move == "stand" or move == "s":
                     BJ.check_hand(p1_hand, no_sort=True)    # sorting when will screw up point calculations so don't
@@ -294,7 +315,7 @@ class Blackjack:
                     player_turn = False
                 """
                 if (move == "double" or move == "d") and first_turn and player_money > bet_amount * 2:    # For double down
-                    print(Fore.GREEN + "You doubled down! Good luck." + Fore.RESET)
+                    print(COL_WIN + "You doubled down! Good luck." + COL_RESET)
                     double_down = True
                     player_money -= bet_amount
                     bet_amount += bet_amount
@@ -304,8 +325,8 @@ class Blackjack:
                 player_turn = False
         dealer_turn = True
         dealer_points = BJ.check_hand(dealer_hand, dealer_points)
-        print(Fore.RED + "Dealer hand: ")
-        print(Fore.RED + "Dealer points: " + str(dealer_points))
+        print(COL_AI + "Dealer hand: ")
+        print(COL_AI + "Dealer points: " + str(dealer_points))
         print(AC.draw_ASCII(dealer_hand))
         while dealer_turn:
             if p1_points == -1:
@@ -319,7 +340,8 @@ class Blackjack:
                 move = "stand"
             if move == "hit":
                 dealer_points = BJ.hit(deck, dealer_hand,
-                                       player="Dealer")  # Here, aces are sorted and score is reevaluated.
+                                       player="Dealer")
+                # Here, aces are sorted and score is reevaluated.
                 BJ.move_ace_to_end(dealer_hand)
             elif move == "stand":
                 BJ.check_hand(dealer_hand, player=False, no_sort=True)
@@ -352,7 +374,7 @@ class DataHandler:
     @staticmethod
     def get_data():
         try:
-            print(Fore.GREEN + "Loading data from file" + Fore.RESET + "\n")
+            print(COL_WIN + "Loading data from file" + COL_RESET + "\n")
             with open("data.p", "rb") as handle:
                 return pickle.load(handle)
         except FileNotFoundError:
@@ -369,17 +391,17 @@ win_dict, money_dict = d
 LTH = Handler()     # Large text handler
 DH = DataHandler()
 BJ = Blackjack()
-print(Fore.LIGHTBLACK_EX + LTH.get_text("blackjack title"))
-print(Fore.YELLOW + LTH.get_text("logo1") + "\n")
+print(COL_BLACK + LTH.get_text("blackjack title"))
+print(COL_BLACKJACK + LTH.get_text("logo1") + "\n")
 BJ.title_screen()
 if "data.p" not in os.listdir():  # make data file if it doesn't exist
-    print(Fore.GREEN + "Save data not found, creating new one...")
+    print(COL_WIN + "Save data not found, creating new one...")
     DH.save_data(d)
     DH.get_data()
 else:
     win_dict, money_dict = DH.get_data()
 
-print(Fore.RESET)
+print(COL_RESET)
 
 player_money = 2000
 deck = BJ.create_decks(6)
@@ -437,7 +459,7 @@ while True:
             playsound(no_money_sound, block=False)
             player_money = 2000
             BJ.title_screen()
-        print(Fore.LIGHTWHITE_EX + "Starting a new game...")
+        print(COL_WHITE + "Starting a new game...")
 
     if len(deck) < 20:
         print("Deck was low on cards... resetting the deck.")
