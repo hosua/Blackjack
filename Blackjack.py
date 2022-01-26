@@ -246,8 +246,8 @@ class Blackjack:
 
     def title_screen(self):
         global COLOR_MODE
-        print("NOTE: If you see leading and trailing garbage characters, colors do not work in your terminal!\n 
-                Refer to the README to fix this issue.\n\n");
+        print("NOTE: If you see leading and trailing garbage characters, colors do not work in your terminal!\n"
+                "Refer to the README to fix this issue.\n\n");
         user_in = int(input(COL_WHITE + "1) Play Game\n" \
                             "2) How to play\n"
                             "3) Delete save\n"
