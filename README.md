@@ -15,23 +15,13 @@
 
  before attempting to run the game.
 
-### NOTE: If the colors work for you out of the box, you can ignore the instructions below.
-
-On Pycharm, colors work by default. On VSCode, colors will display properly by default as well.
-
-There are many other methods to get color working, these are just a few examples. 
-
-If you cannot get colors to work or can't be bothered, you can easily disable them by editing the
-
+ This won't display fonts properly on windows cmd or powershell, so you will have to turn off the ``COLOR_MODE`` variable to false for it to display properly.
 
 ``COLOR_MODE = True`` 
 
 variables in `ASCII_Cards.py` **and** `Blackjack.py` to 
 
-
 ``COLOR_MODE = False``.
-
-A more detailed thread about this topic can be found [here](https://stackoverflow.com/questions/2048509/how-to-echo-with-different-colors-in-the-windows-command-line).
 
 # Running the Program
 
