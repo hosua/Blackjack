@@ -3,17 +3,17 @@ import os
 import pickle
 import ASCII_Cards
 import time
-from playsound import playsound
+# from playsound import playsound
 from Large_Text_Handler import Handler
 from colorama import Fore
 from colorama import Back
 AC = ASCII_Cards.CardToASCII()
 root = os.getcwd()
-sound_path = os.path.join(root, "Sounds")
-win_sound = os.path.join(sound_path, "tada.mp3")
-lose_sound = os.path.join(sound_path, "fail.mp3")
-neutral_sound = os.path.join(sound_path, "neutral.mp3")
-no_money_sound = os.path.join(sound_path, "the-price-is-right-losing-horn.mp3")
+# sound_path = os.path.join(root, "Sounds")
+# win_sound = os.path.join(sound_path, "tada.mp3")
+# lose_sound = os.path.join(sound_path, "fail.mp3")
+# neutral_sound = os.path.join(sound_path, "neutral.mp3")
+# no_money_sound = os.path.join(sound_path, "the-price-is-right-losing-horn.mp3")
 
 COLOR_MODE = True
 
@@ -62,13 +62,13 @@ class Blackjack:
     @staticmethod
     def win_message(win):
         if win == "win":
-            playsound(win_sound, block=False)
+            # playsound(win_sound, block=False)
             return COL_WIN + "You win!" + "\n" + COL_RESET
         elif win == "lose":
-            playsound(lose_sound, block=False)
+            # playsound(lose_sound, block=False)
             return COL_LOSE + "You lose!" + "\n" + COL_RESET
         elif win == "tie":
-            playsound(neutral_sound, block=False)
+            # playsound(neutral_sound, block=False)
             return COL_WHITE + "Tie!" + "\n"
 
     @staticmethod
@@ -458,7 +458,7 @@ while True:
         DH.save_data(d)
         if player_money == 0:
             print("Game over, you lost all your money!")
-            playsound(no_money_sound, block=False)
+            # playsound(no_money_sound, block=False)
             player_money = 2000
             BJ.title_screen()
         print(COL_WHITE + "Starting a new game...")

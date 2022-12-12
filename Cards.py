@@ -76,16 +76,11 @@ class CardHandler:
 
     def make_deck(self, show=True):
         cards = []
-        count = 0
         while len(cards) != 52:
-            new_card = Card(r.choice(list(self.card_dict["ranks"])), r.choice(list(self.card_dict["suits"])))
-            not_in_deck = True
-            for i in range(len(cards)):
-                if new_card.get() == cards[i].get():
-                    not_in_deck = False
-            if not_in_deck:  # With this, we append cards to the deck only if they are not already in it.
-                cards.append(new_card)
-                count += 1
+            for rank in list(self.card_dict["ranks"]): 
+                for suit in list(self.card_dict["suits"]):
+                    cards.append(Card(rank, suit));
+        self.shuffle_cards(cards)
         return cards
 
     @staticmethod
